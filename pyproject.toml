@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "coupon-manager"
+version = "0.1.0"
+description = "DevOps & Cloud Testing Architecture Course Project"
+authors = ["Metehan Muhammed Torun <mtorun@marun.edu.tr>"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --cov=src"
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 70

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon Manager - DevOps Control Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen flex flex-col justify-between">
+
+    <header class="bg-gray-800 border-b border-gray-700 shadow-lg py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 p-2 rounded-lg text-white font-bold text-xl shadow-md">🎟️</div>
+                <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Coupon Manager API</h1>
+            </div>
+            <span class="bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-1 rounded-full border border-green-500/20 shadow-sm flex items-center space-x-1">
+                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-1"></span> Live Environment
+            </span>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-2xl w-full mx-auto px-4 py-12">
+        <div class="bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-8 transform transition-all duration-300 hover:shadow-indigo-500/5">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-white mb-2">Coupon Validation Panel</h2>
+                <p class="text-sm text-gray-400">Enter a coupon code and basket value below to test validation via E2E pipeline.</p>
+            </div>
+
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Coupon Code</label>
+                    <input type="text" id="couponCode" placeholder="e.g., E2ETEST" class="w-full bg-gray-900 border border-gray-600 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition duration-200">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">Basket Value ($)</label>
+                    <input type="number" id="basketValue" placeholder="e.g., 150" class="w-full bg-gray-900 border border-gray-600 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition duration-200">
+                </div>
+
+                <button id="validateBtn" onclick="validateCoupon()" class="w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 active:shadow-none transform transition duration-150 active:scale-[0.99] mt-2">
+                    Validate Coupon
+                </button>
+            </div>
+
+            <div class="mt-8 border-t border-gray-700/50 pt-6">
+                <div class="bg-gray-900/50 border border-gray-700 rounded-xl p-4 min-h-

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coupon-manager-deployment
+  labels:
+    app: coupon-manager
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: coupon-manager
+  template:
+    metadata:
+      labels:
+        app: coupon-manager
+    spec:
+      containers:
+      - name: coupon-manager-api
+        image: coupon-manager-web:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          value: "test"
+        - name: AWS_SECRET_ACCESS_KEY
+          value: "test"
+        - name: AWS_DEFAULT_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: coupon-manager-config
+              key: AWS_DEFAULT_REGION
