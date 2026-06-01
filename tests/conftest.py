@@ -1,4 +1,7 @@
 import pytest
+import uvicorn
+import multiprocessing
+import time
 from fastapi.testclient import TestClient
 from src.main import app
 from src.services.s3_service import S3Service
@@ -32,3 +35,11 @@ def mock_s3(monkeypatch):
     monkeypatch.setattr(S3Service, "get_coupon", mock_get)
     monkeypatch.setattr(S3Service, "list_coupons", mock_list)
     monkeypatch.setattr(S3Service, "delete_coupon", mock_delete)
+
+@pytest.fixture(scope="session")
+def run_app():
+    proc = multiprocessing.Process(target=lambda: uvicorn.run(app, host="127.0.0.1", port=8000))
+    proc.start()
+    time.sleep(5) 
+    yield
+    proc.terminate() 

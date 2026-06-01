@@ -3,6 +3,11 @@ import pytest
 import httpx
 from playwright.sync_api import sync_playwright
 
+@pytest.fixture(autouse=True)
+def setup_e2e(run_app):
+    """E2E testleri başlamadan önce sunucunun hazır olmasını sağlar."""
+    pass
+
 @pytest.fixture
 def setup_coupon():
     code = "E2ETEST"
