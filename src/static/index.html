@@ -57,8 +57,11 @@
             const msgDiv = document.getElementById('resultMessage');
 
             try {
-                // API endpointine istek atıyoruz
-                const response = await fetch(`/coupons/${code}?basket_value=${value}`);
+                const response = await fetch(`/coupons/${code}/validate?basket_value=${value}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
                 const result = await response.json();
                 
                 msgDiv.classList.remove('hidden', 'bg-red-500/10', 'text-red-400', 'border-red-500/20', 'bg-green-500/10', 'text-green-400', 'border-green-500/20');
@@ -72,7 +75,7 @@
                 }
             } catch (e) {
                 msgDiv.textContent = "Error: Connection failed";
-                msgDiv.classList.remove('hidden', 'bg-green-500/10', 'text-green-400', 'border-green-500/20');
+                msgDiv.classList.remove('hidden');
                 msgDiv.classList.add('bg-red-500/10', 'text-red-400', 'border-red-500/20');
             }
             msgDiv.classList.remove('hidden');
