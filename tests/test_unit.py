@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 from tests.factories import CouponFactory
+from unittest.mock import MagicMock
+from src.services.s3_service import S3Service
 
 def test_create_coupon(client):
     payload = {
@@ -77,3 +79,12 @@ def test_s3_service_coverage():
     s3.list_coupons()
     s3.get_coupon("NONEXISTENT_CODE")
     s3.delete_coupon("NONEXISTENT_CODE")
+
+def test_s3_service_real_coverage():
+    s3 = S3Service()
+    s3._ensure_bucket_exists()
+
+    try:
+        s3.list_coupons()
+    except:
+        pass

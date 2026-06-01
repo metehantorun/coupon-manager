@@ -52,7 +52,7 @@ jobs:
         AWS_DEFAULT_REGION: us-east-1
         S3_ENDPOINT_URL: http://localhost:4566
       run: |
-        pytest --cov=src tests/ --cov-fail-under=70
+        pytest --cov=src tests/ --cov-fail-under=70 --cov-branch
 
     - name: Install Node.js for Newman and k6
       uses: actions/setup-node@v4
