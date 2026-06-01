@@ -17,15 +17,16 @@ class S3Service:
         )
         self.bucket_name = "coupon-vault"
         self.bucket = self.s3.Bucket(self.bucket_name)
-        self.bucket_exists = False  
+        self.bucket_created = False
 
     def _ensure_bucket_exists(self):
-        if not self.bucket_exists:
+        """Bucket var mı kontrol et, yoksa oluştur."""
+        if not self.bucket_created:
             try:
                 self.bucket.create()
-                self.bucket_exists = True
+                self.bucket_created = True
             except ClientError:
-                self.bucket_exists = True 
+                self.bucket_created = True
 
     def save_coupon(self, coupon: Coupon) -> bool:
         self._ensure_bucket_exists() 
@@ -39,7 +40,7 @@ class S3Service:
             return False
 
     def get_coupon(self, code: str) -> Optional[Coupon]:
-        self._ensure_bucket_exists()
+        self._ensure_bucket_exists() 
         try:
             obj = self.s3.Object(self.bucket_name, f"{code}.json")
             data = json.loads(obj.get()["Body"].read().decode("utf-8"))
@@ -48,7 +49,7 @@ class S3Service:
             return None
 
     def list_coupons(self) -> list[Coupon]:
-        self._ensure_bucket_exists()
+        self._ensure_bucket_exists() 
         coupons = []
         try:
             for obj in self.bucket.objects.all():
@@ -62,7 +63,7 @@ class S3Service:
         return coupons
 
     def delete_coupon(self, code: str) -> bool:
-        self._ensure_bucket_exists()
+        self._ensure_bucket_exists() 
         try:
             self.s3.Object(self.bucket_name, f"{code}.json").delete()
             return True

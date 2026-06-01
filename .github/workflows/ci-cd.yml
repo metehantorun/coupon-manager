@@ -33,28 +33,26 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Install Playwright Browsers
+      run: |
+        python -m playwright install --with-deps chromium
+
     - name: Wait for LocalStack
       run: |
-        echo "LocalStack'in hazır olması bekleniyor..."
-        for i in {1..10}; do
+        echo "LocalStack bekleniyor..."
+        for i in {1..15}; do
           curl -s http://localhost:4566/_localstack/health && break
-          echo "Bekleniyor..."
-          sleep 2
+          sleep 3
         done
 
-    - name: Run Pytest with Coverage and E2E
+    - name: Run Pytest with Coverage
       env:
         AWS_ACCESS_KEY_ID: test
         AWS_SECRET_ACCESS_KEY: test
         AWS_DEFAULT_REGION: us-east-1
-        # Uygulamanın LocalStack'e bağlanacağı adres
         S3_ENDPOINT_URL: http://localhost:4566
       run: |
         pytest --cov=src tests/ --cov-fail-under=70
-
-    - name: Install Playwright Browsers
-      run: |
-        python -m playwright install --with-deps chromium
 
     - name: Install Node.js for Newman and k6
       uses: actions/setup-node@v4
@@ -64,7 +62,7 @@ jobs:
     - name: Install Newman
       run: npm install -g newman
 
-    - name: Run Background Application for Integration Tests
+    - name: Run Background Application
       env:
         AWS_ACCESS_KEY_ID: test
         AWS_SECRET_ACCESS_KEY: test
@@ -72,7 +70,7 @@ jobs:
         S3_ENDPOINT_URL: http://localhost:4566
       run: |
         uvicorn src.main:app --host 0.0.0.0 --port 8000 &
-        sleep 5
+        sleep 10 # Uygulamanın tam ayağa kalkması için biraz daha süre tanıyalım
 
     - name: Run Postman Collection via Newman
       run: |
@@ -84,9 +82,6 @@ jobs:
     - name: Run Performance Test via k6
       run: |
         k6 run perf/load-test.js
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
 
     - name: Build Docker Image
       uses: docker/build-push-action@v5
