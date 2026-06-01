@@ -69,3 +69,11 @@ def test_create_coupon_with_factory(client):
     response = client.post("/coupons", json=payload)
     assert response.status_code == 201
     assert response.json()["code"] == fake_coupon.code
+
+def test_s3_service_coverage():
+    from src.services.s3_service import S3Service
+    s3 = S3Service()
+    
+    s3.list_coupons()
+    s3.get_coupon("NONEXISTENT_CODE")
+    s3.delete_coupon("NONEXISTENT_CODE")
