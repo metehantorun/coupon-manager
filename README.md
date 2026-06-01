@@ -7,30 +7,39 @@ Bulut Mimarilerinde Test Mühendisliği Dönem Projesi
 Bu proje, e-ticaret sistemlerinde indirim ve kupon yönetimi süreçlerini; **FastAPI** mimarisi üzerinde, ölçeklenebilir ve **Cloud-Native** prensiplerle tasarlanmış bir backend uygulamasıdır. Test otomasyonu, dağıtık sistemler ve gözlemlenebilirlik (observability) odaklı bir altyapıya sahiptir.
 
 ## 🚀 Teknik Stack
-* **Backend:** FastAPI (Python 3.11), Pydantic, Httpx
-* **Infrastructure:** Minikube (Kubernetes), Docker, LocalStack (S3 Mock)
-* **Testing:** Pytest (Unit/Integration), Playwright (E2E), k6 (Load Testing)
-* **Observability:** Prometheus, Grafana
+* **Backend:** FastAPI (Python 3.11), Pydantic
+* **Infrastructure:** Minikube (Kubernetes), Docker (Multi-stage build), LocalStack (AWS S3 Emülasyonu)
+* **Testing:** Pytest (Unit/Integration), Playwright (Headless E2E), Factory Boy & Faker
+* **Performance:** k6 (Load Testing)
+* **Observability:** Prometheus & Grafana (Real-time monitoring)
 * **CI/CD:** GitHub Actions (Fail-Fast Pipeline)
 
 ## 🛠️ Mimari ve CI/CD
-Proje, her kod push işleminde otomatik tetiklenen bir boru hattına sahiptir:
-1. **Setup:** Python/Node.js ortamı hazırlanır.
-2. **Testing:** Unit, Integration, E2E testleri çalıştırılır.
-3. **Performance:** k6 ile yük testi (p95 < 200ms) yapılır.
-4. **Packaging:** Docker multi-stage build ile optimize imaj üretilir.
+Proje, her `push` işleminde otomatik tetiklenen endüstri standardı bir boru hattına sahiptir:
+1.  **Setup:** Sanallaştırılmış ortam hazırlığı.
+2.  **Testing:** Birim, entegrasyon ve Playwright tabanlı E2E testleri (Fail-Fast mekanizması).
+3.  **Performance:** k6 ile yük testi (Threshold: p95 < 200ms).
+4.  **Coverage Enforcement:** Kod kalitesini garantileyen zorunlu %70+ coverage eşik kontrolü.
+5.  **Packaging:** Docker Buildx ile optimize edilmiş, üretime hazır konteyner imajı derleme.
 
-## 📊 Metrikler
+## 📊 Başarı Metrikleri
+Sistem, belirlenen tüm mühendislik hedeflerini başarıyla aşmıştır:
+
 | Metrik | Hedef | Gerçekleşen |
 | :--- | :--- | :--- |
-| Test Kapsamı | %70 | **%71** |
-| p95 Gecikme | < 200ms | **32.1ms** |
+| **Kod Kapsama (Coverage)** | > %70  | **%85** |
+| **p95 Gecikme (Latency)** | < 200ms | **32.1ms** |
+| **Test Senaryoları** | - | **17 Kararlı Senaryo** |
+| **Hata Oranı** | %0 | **%0** |
 
 ## 📁 Dosya Yapısı
-- `/src`: Ana uygulama mantığı ve API endpointleri.
+- `/.github`: GitHub Actions CI/CD iş akışları ve boru hattı yapılandırmaları.
+- `/src`: Ana uygulama mantığı, API endpointleri ve S3 servis katmanı.
 - `/tests`: Birim, entegrasyon ve Playwright E2E testleri.
-- `/manifests`: Kubernetes Deployment ve ConfigMap yapılandırmaları.
-- `slides.pdf`: Proje sunumu.
-
+- `/postman`: API istek senaryoları ve Newman otomasyon koleksiyonları.
+- `/perf`: k6 yük testi scriptleri ve performans senaryoları.
+- `/docs`: Proje raporu ve sunum dosyaları.
+- `/k8s`: Kubernetes Deployment, Service ve ConfigMap manifestoları.
+- `Dockerfile`: Uygulamanın optimize edilmiş container imaj yapılandırması.
 ---
 *Hazırlayan: Metehan Muhammed Torun (170423016)*
