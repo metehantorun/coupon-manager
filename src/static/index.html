@@ -44,4 +44,39 @@
             </div>
 
             <div class="mt-8 border-t border-gray-700/50 pt-6">
-                <div class="bg-gray-900/50 border border-gray-700 rounded-xl p-4 min-h-
+                <div id="resultMessage" class="text-sm font-medium text-center hidden p-4 rounded-xl border">
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        async function validateCoupon() {
+            const code = document.getElementById('couponCode').value;
+            const value = document.getElementById('basketValue').value;
+            const msgDiv = document.getElementById('resultMessage');
+
+            try {
+                // API endpointine istek atıyoruz
+                const response = await fetch(`/coupons/${code}?basket_value=${value}`);
+                const result = await response.json();
+                
+                msgDiv.classList.remove('hidden', 'bg-red-500/10', 'text-red-400', 'border-red-500/20', 'bg-green-500/10', 'text-green-400', 'border-green-500/20');
+                
+                if (response.ok) {
+                    msgDiv.textContent = "Success: Coupon is valid!";
+                    msgDiv.classList.add('bg-green-500/10', 'text-green-400', 'border-green-500/20');
+                } else {
+                    msgDiv.textContent = "Error: " + (result.detail || "Invalid coupon");
+                    msgDiv.classList.add('bg-red-500/10', 'text-red-400', 'border-red-500/20');
+                }
+            } catch (e) {
+                msgDiv.textContent = "Error: Connection failed";
+                msgDiv.classList.remove('hidden', 'bg-green-500/10', 'text-green-400', 'border-green-500/20');
+                msgDiv.classList.add('bg-red-500/10', 'text-red-400', 'border-red-500/20');
+            }
+            msgDiv.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
