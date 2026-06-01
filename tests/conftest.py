@@ -10,7 +10,7 @@ from src.services.s3_service import S3Service
 def client():
     return TestClient(app)
 
-@pytest.fixture(autouse=True)
+@pytest.fixture
 def mock_s3(monkeypatch):
     storage = {}
     
@@ -42,4 +42,4 @@ def run_app():
     proc.start()
     time.sleep(5) 
     yield
-    proc.terminate() 
+    proc.terminate()
