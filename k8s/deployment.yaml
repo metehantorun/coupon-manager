@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: coupon-manager-api
-        image: coupon-manager-web:latest
-        imagePullPolicy: Never
+        image: coupon-manager:latest
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
         env:
