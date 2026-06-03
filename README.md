@@ -114,8 +114,8 @@ kubectl port-forward service/coupon-manager-service 8000:8000
 
 Canlı demo sırasında oluşabilecek olası altyapı veya yerel ağ kesintilerine karşı hazırlanan kesintisiz sistem akış videosuna aşağıdaki linkten erişebilirsiniz:
 
-🔗 **[Metehan Muhammed Torun — Coupon Manager E2E Canlı Demo Videosu]()**
-*https://drive.google.com/file/d/1tiaq71QqgjrLij7UyvKaDA2zfIa6WRw9/view?usp=sharing*
+🔗 **[Metehan Muhammed Torun — Coupon Manager E2E Canlı Demo Videosu](https://drive.google.com/file/d/1tiaq71QqgjrLij7UyvKaDA2zfIa6WRw9/view?usp=sharing)**
+
 
 ---
 
