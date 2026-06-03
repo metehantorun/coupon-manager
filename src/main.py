@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Query
 from typing import List
 from datetime import datetime
 from .models import Coupon
@@ -33,7 +33,7 @@ def get_coupon(code: str):
     return coupon
 
 @app.post("/coupons/{code}/validate")
-def validate_coupon(code: str, basket_value: float):
+def validate_coupon(code: str, basket_value: float = Query(..., description="Sepet tutarı")):
     coupon = s3_service.get_coupon(code)
     if not coupon:
         raise HTTPException(status_code=404, detail="Coupon not found")

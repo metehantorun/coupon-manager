@@ -45,7 +45,7 @@
 
             <div class="mt-8 border-t border-gray-700/50 pt-6">
                 <div id="resultMessage" class="text-sm font-medium text-center hidden p-4 rounded-xl border">
-                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -57,7 +57,8 @@
             const msgDiv = document.getElementById('resultMessage');
 
             try {
-                const response = await fetch(`/coupons/${code}/validate?basket_value=${value}`, {
+                const baseUrl = window.location.origin;
+                const response = await fetch(`${baseUrl}/coupons/${code}/validate?basket_value=${value}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' }
                 });
